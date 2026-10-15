@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  receipt-ocr-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: receipt_ocr_api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - receipt_data:/app/data
+    environment:
+      - RECEIPT_DB_PATH=/app/data/financial_manager.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  receipt_data:

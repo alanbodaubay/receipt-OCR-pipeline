@@ -22,6 +22,7 @@ class ReceiptDatabase:
     @contextmanager
     def _get_connection(self):
         conn = sqlite3.connect(self.db_path)
+        conn.execute("PRAGMA foreign_keys = ON")
         conn.row_factory = sqlite3.Row
         try:
             yield conn
@@ -65,7 +66,8 @@ class ReceiptDatabase:
             """)
 
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_receipts_date ON receipts(date)")
-            cursor.execute("CREATE INDEX IF NOT EXISTS idx_receipts_category ON receipts(category)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_receipts_category_date ON receipts(category, date)")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_receipt_items_receipt_id ON receipt_items(receipt_id)")
             conn.commit()
 
     def save_receipt(self, receipt: ParsedReceipt) -> int:

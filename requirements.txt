@@ -8,8 +8,11 @@ rapidfuzz>=3.0.0
 pytesseract>=0.3.10
 opencv-python-headless>=4.8.0
 
-# User Interface
+# User Interface & Backend Web Services
 streamlit>=1.30.0
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
+pydantic>=2.6.0
 
 # Development & Testing
 pytest>=7.4.0

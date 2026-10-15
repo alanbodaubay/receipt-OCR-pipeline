@@ -75,6 +75,21 @@ python3 -m receipt_ocr.cli stats
 streamlit run app.py
 ```
 
+### 4. Launch the FastAPI Production REST Service
+```bash
+# Start FastAPI with Uvicorn (Interactive Swagger UI at http://localhost:8000/docs)
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### 5. Run with Docker & Docker Compose
+```bash
+# Spin up isolated containerized OCR microservice
+docker-compose up --build -d
+
+# Verify health endpoint
+curl http://localhost:8000/api/v1/health
+```
+
 ---
 
 ## 🧪 Running Automated Tests
